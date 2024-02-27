@@ -55,12 +55,12 @@ public class Questions
         {
             if (!charCounts.TryGetValue(c, out int value))
             {
-                return false; 
+                return false;
             }
             charCounts[c] = --value;
             if (value < 0)
             {
-                return false; 
+                return false;
             }
         }
         return true;
@@ -93,6 +93,37 @@ public class Questions
 
         throw new ArgumentException("No two sum solution");
     }
-}
+
+
+#endregion
+    #region Group Anagrams
+    /*Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+    An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.*/
+    public IList<IList<string>> GroupAnagrams(string[] strs)
+    {
+        if (strs == null || strs.Length == 0) return new List<IList<string>>();
+
+        Dictionary<string, List<string>> map = [];
+
+        foreach (string s in strs)
+        {
+            char[] characters = s.ToCharArray();
+            Array.Sort(characters);
+            string sorted = new(characters);
+
+            if (!map.TryGetValue(sorted, out List<string>? value))
+            {
+                value = [];
+                map[sorted] = value;
+            }
+
+            value.Add(s);
+        }
+
+        return map.Values.ToList<IList<string>>();
+    }
+
 
     #endregion
+}
